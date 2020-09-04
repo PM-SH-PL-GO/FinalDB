@@ -12,22 +12,20 @@
 */
 
 CREATE TABLE REVIEW (
-	lecture_category_id VARCHAR2(50) NOT NULL
-    , lecture_category_id VARCHAR2(50) NOT NULL
-	, member_id VARCHAR2(50) NOT NULL 
-    , lecture_id  VARCHAR2(50) NOT NULL 
-    , review_score NUMBER(50)
-    , review_content VARCHAR2(50)
-    , review_dt DATE
-    , review_deleteYN  VARCHAR2(1)
+	lecture_category_id VARCHAR2(10)
+	, member_id VARCHAR2(15)
+    , lecture_id number
+    , review_score NUMBER(3) not null
+    , review_content VARCHAR2(300) not null
+    , review_dt DATE not null
     
     -- review PK
-    CONSTRAINT PK_lecture_category_id PRIMARY KEY lecture_category_id ,
+    , CONSTRAINT PK_lecture_category_id PRIMARY KEY(lecture_category_id, member_id, lecture_id)
     
     -- review FK : user_lecture_history 테이블 참조
-    CONSTRAINT FK_review_TO_user_lecture_history
-    FOREIGN KEY ( lecture_category_id, member_id, lecture_id)
-    REFERENCES user_lecture_history (	lecture_category_id , member_id, lecture_id)
+    , CONSTRAINT FK_review_TO_user_lecture_history
+    FOREIGN KEY (lecture_category_id, member_id, lecture_id)
+    REFERENCES user_lecture_history (lecture_category_id , member_id, lecture_id)
     ON DELETE CASCADE
 );
 
@@ -40,16 +38,14 @@ CREATE TABLE REVIEW (
     댓글작성일 studyReply_dt date
 */
 CREATE TABLE studyReply (
-	studyReply_id NUMBER(50) NOT NULL
-	, studyReply_parent_board NUMBER(50) NOT NULL
-	, studyReply_user_id  VARCHAR2(50) NOT NULL
-    , studyReply_content VARCHAR2(50)
+	studyReply_id NUMBER
+	, studyReply_parent_board NUMBER NOT NULL
+	, studyReply_user_id  VARCHAR2(15) NOT NULL
+    , studyReply_content VARCHAR2(2000)
     , studyReply_dt DATE
    
     -- studyReply PK
-    CONSTRAINT PK_studyReply_id PRIMARY KEY studyReply_id ,
-    CONSTRAINT PK_studyReply_parent_board PRIMARY KEY studyReply_parent_board ,
-    CONSTRAINT PK_studyReply_user_id PRIMARY KEY studyReply_user_id ,
+   ,CONSTRAINT PK_studyReply_id PRIMARY KEY(studyReply_id) ,
     
     -- studyReply FK  : studyBoard 테이블 참조
     CONSTRAINT FK_studyReply_TO_studyBoard FOREIGN KEY ( studyReply_parent_board )
