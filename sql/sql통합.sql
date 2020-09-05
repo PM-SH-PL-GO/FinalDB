@@ -1,20 +1,21 @@
 --lec_category
 -------------------------------------
 CREATE TABLE lecture_category(
-category_id VARCHAR2(10),
-category_name VARCHAR2(50)
+category_id VARCHAR2(10) NOT NULL,
+category_name VARCHAR2(50),
+CONSTRAINT lecture_category_pk PRIMARY KEY (category_id)
 );
-ALTER TABLE lecture_category ADD CONSTRAINT lecture_category_pk PRIMARY KEY (category_id);
-ALTER TABLE lecture_category MODIFY (category_name NOT NULL);
---drop TABLE lec_category;
+--drop TABLE lecture_category CASCADE CONSTRAINTS;
 ---------------------------------------------
 --FAQ
 ---------------------------------------------
 CREATE TABLE FAQ(
     FAQ_ID NUMBER(3),
     FAQ_QUESTION VARCHAR2(300),
-    FAQ_ANSWER VARCHAR2(300));
-ALTER TABLE FAQ ADD CONSTRAINT FAQ_pk PRIMARY KEY (FAQ_ID);
+    FAQ_ANSWER VARCHAR2(300),
+    CONSTRAINT FAQ_pk PRIMARY KEY (FAQ_ID)
+    );
+--drop TABLE FAQ CASCADE CONSTRAINTS;
 ---------------------------------------------
 --member
 ---------------------------------------------
@@ -34,6 +35,8 @@ ALTER TABLE FAQ ADD CONSTRAINT FAQ_pk PRIMARY KEY (FAQ_ID);
    CONSTRAINT member2_fk FOREIGN KEY (member_favorite2) REFERENCES lecture_category(category_id),
     CONSTRAINT member3_fk FOREIGN KEY (member_favorite3) REFERENCES lecture_category(category_id)
    );
+   
+   --drop TABLE member CASCADE CONSTRAINTS;
 ---------------------------------------------
 --Tutor
 ---------------------------------------------
@@ -45,12 +48,14 @@ CREATE TABLE Tutor (
     tutor_introduce varchar2(3000) NOT NULL,
     tutor_link varchar2(100),
     tutor_score number(5),
-    constraint tutor_pk primary key(tutor_id, tutor_category_id));
+    constraint tutor_pk primary key(tutor_id, tutor_category_id),
+    constraint lecture_fk foreign key(tutor_category_id) references lecture_category(category_id),
+    constraint member_fk1 foreign key(tutor_id) references member(member_id)
+    );
 
-    ALTER TABLE tutor ADD constraint lecture_fk foreign key(tutor_category_id) references lecture_category(category_id);
-    ALTER TABLE tutor ADD constraint member_fk1 foreign key(tutor_id) references member(member_id);
+    --DROP TABLE Tutor CASCADE CONSTRAINTS ;
 ---------------------------------------------
---DROP TABLE Tutor CASCADE CONSTRAINTS ;
+
 
 --freeBoard
 ---------------------------------------------
@@ -66,6 +71,7 @@ create table freeBoard(
     CONSTRAINT pk_freeBoard_id Primary Key(freeBoard_id),
     CONSTRAINT fk_freeBoard_member_id Foreign Key(freeBoard_member_id) References member (member_id)
                 ON DELETE CASCADE);
+    --DROP TABLE freeBoard CASCADE CONSTRAINTS ;
 ---------------------------------------------
 --FreeReply  
 ---------------------------------------------
@@ -76,11 +82,11 @@ create table freeBoard(
    freeReply_member_id VARCHAR2(15 BYTE) NOT NULL,
    freeReply_content VARCHAR2(2000 BYTE) NOT NULL,
    freeReply_dt DATE NOT NULL,
-
+   CONSTRAINT FreeReply_pk PRIMARY KEY (freeReply_id),
    CONSTRAINT freereply_parent_board_fk FOREIGN KEY (freeReply_parent_board) REFERENCES FreeBoard(freeBoard_id), 
    CONSTRAINT freereply_member_id_fk FOREIGN KEY (freeReply_member_id) REFERENCES member(member_id)
    );
-   ALTER TABLE FreeReply ADD CONSTRAINT FreeReply_pk PRIMARY KEY (freeReply_id);
+   --DROP TABLE FreeReply CASCADE CONSTRAINTS ;
 ---------------------------------------------
 --STUDY_BOARD 
 ---------------------------------------------
@@ -97,6 +103,7 @@ CREATE TABLE STUDY_BOARD (
       CONSTRAINT STUDY_BOARD_PK PRIMARY KEY (STUDYBOARD_ID),
       CONSTRAINT MEMBER_FK FOREIGN KEY (STUDYBOARD_MEMBER_ID) REFERENCES MEMBER(MEMBER_ID)
 );
+   --DROP TABLE STUDY_BOARD CASCADE CONSTRAINTS ;
 ---------------------------------------------
 CREATE TABLE studyReply (
 	studyReply_id NUMBER
@@ -107,8 +114,9 @@ CREATE TABLE studyReply (
 
    ,CONSTRAINT studyReply_id_pk PRIMARY KEY(studyReply_id) 
    ,CONSTRAINT studyReply_to_studyBoard_FK FOREIGN KEY (studyReply_parent_board)REFERENCES study_Board ( studyBoard_id )  
-    ,CONSTRAINT studyReply_to_member_fk FOREIGN KEY ( studyReply_member_id )REFERENCES member ( member_id )
+   ,CONSTRAINT studyReply_to_member_fk FOREIGN KEY ( studyReply_member_id )REFERENCES member ( member_id )
 );
+   --DROP TABLE studyReply CASCADE CONSTRAINTS ;
 ---------------------------------------------
 --lecture_detail
 ---------------------------------------------
@@ -120,12 +128,12 @@ lecture_caution varchar2(900),
 lecture_fileName varchar2(100),
 lecture_reject_reason varchar2(600),
 lecture_cancel_reason varchar2(600),
-lecture_location varchar2(300));
+lecture_location varchar2(300),
+CONSTRAINT lecture_detail_pk PRIMARY KEY(lecture_id, lecture_category_id)
+);
 
-ALTER TABLE lecture_detail ADD CONSTRAINT lecture_detail_pk PRIMARY KEY(lecture_id, lecture_category_id);
-
+   --DROP TABLE lecture_detail CASCADE CONSTRAINTS ;
 ---------------------------------------------
-
 --lecture
 ---------------------------------------------
 CREATE TABLE lecture (
@@ -141,12 +149,13 @@ CREATE TABLE lecture (
     lecture_end_dt DATE NOT NULL,
     lecture_max NUMBER(3) NOT NULL,
     lecture_min NUMBER(3) NOT NULL,
-    lecture_current NUMBER(3));
-  ALTER TABLE lecture ADD CONSTRAINT lecture_id_pk primary key(lecture_id, lecture_category_id);
-  ALTER TABLE lecture ADD CONSTRAINT lecture_category_id_FK FOREIGN KEY(lecture_category_id,lecture_tutor_id)
-    REFERENCES tutor(TUTOR_CATEGORY_ID,TUTOR_ID)
-    ON DELETE CASCADE; 
-    
+    lecture_current NUMBER(3),
+    CONSTRAINT lecture_id_pk primary key(lecture_id, lecture_category_id),
+    CONSTRAINT lecture_category_id_FK FOREIGN KEY(lecture_category_id,lecture_tutor_id)
+    REFERENCES tutor(TUTOR_CATEGORY_ID,TUTOR_ID) ON DELETE CASCADE    
+    );
+   --DROP TABLE lecture CASCADE CONSTRAINTS ;    
+   
     ALTER table lecture_detail ADD CONSTRAINT lecture2_fk FOREIGN KEY (lecture_id, lecture_category_id)REFERENCES lecture (lecture_id, lecture_category_id);
 
 ---------------------------------------------
@@ -157,12 +166,11 @@ CREATE TABLE wishlist (
     member_id varchar2(15),
     lecture_category_id varchar2(10),
     CONSTRAINT wishlist_pk PRIMARY KEY(lecture_id,member_id,lecture_category_id) ,
-    CONSTRAINT lecture_fk 
-    FOREIGN KEY(lecture_id, lecture_category_id) REFERENCES lecture(lecture_id,lecture_category_id),
-    CONSTRAINT member_id_fk 
-    FOREIGN KEY(member_id) REFERENCES member(member_id));
+    CONSTRAINT lecture_fk1 FOREIGN KEY(lecture_id, lecture_category_id) REFERENCES lecture(lecture_id,lecture_category_id),
+    CONSTRAINT member_id_fk1 FOREIGN KEY(member_id) REFERENCES member(member_id)
+    );
+    --drop table wishlist CASCADE CONSTRAINTS;
 ---------------------------------------------
---drop table wishlist CASCADE CONSTRAINTS;
 --MEMBER_LECTURE_HISTORY
 ---------------------------------------------
 CREATE TABLE MEMBER_LECTURE_HISTORY (
@@ -170,11 +178,11 @@ CREATE TABLE MEMBER_LECTURE_HISTORY (
         LECTURE_ID number,
         LECTURE_CATEGORY_ID VARCHAR2(10),
         PAYMENT_DT DATE NOT NULL,
-        CANCEL_DT DATE);
-        
-ALTER TABLE MEMBER_LECTURE_HISTORY ADD CONSTRAINT MEMBER_LECTURE_HISTORY_PK PRIMARY KEY (MEMBER_ID,LECTURE_ID,LECTURE_CATEGORY_ID);
-ALTER TABLE MEMBER_LECTURE_HISTORY ADD CONSTRAINT MEMBER_id1_FK FOREIGN KEY (MEMBER_ID) REFERENCES MEMBER(MEMBER_ID);    
-ALTER TABLE MEMBER_LECTURE_HISTORY ADD CONSTRAINT LECTURE_FK1 FOREIGN KEY (LECTURE_ID,LECTURE_CATEGORY_ID) REFERENCES LECTURE(LECTURE_ID,LECTURE_CATEGORY_ID);
+        CANCEL_DT DATE,
+        CONSTRAINT MEMBER_LECTURE_HISTORY_PK3 PRIMARY KEY (MEMBER_ID,LECTURE_ID,LECTURE_CATEGORY_ID),
+        CONSTRAINT MEMBER_id3_FK FOREIGN KEY (MEMBER_ID) REFERENCES MEMBER(MEMBER_ID),
+        CONSTRAINT LECTURE_FK3 FOREIGN KEY (LECTURE_ID,LECTURE_CATEGORY_ID) REFERENCES LECTURE(LECTURE_ID,LECTURE_CATEGORY_ID));
+    --drop table MEMBER_LECTURE_HISTORY CASCADE CONSTRAINTS;
 ---------------------------------------------
 --REVIEW
 ---------------------------------------------
@@ -192,5 +200,6 @@ CREATE TABLE REVIEW (
     REFERENCES member_lecture_history (lecture_category_id , member_id, lecture_id)
     ON DELETE CASCADE
 );
+    drop table REVIEW CASCADE CONSTRAINTS;
 ---------------------------------------------
 commit;
