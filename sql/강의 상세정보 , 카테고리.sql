@@ -15,3 +15,5 @@ CREATE TABLE lec_category(
 category_id VARCHAR2(10),
 category_name VARCHAR2(50)
 );
+
+ALTER TABLE lec_category add constraint pk_category_id Primary key(category_id);

@@ -10,5 +10,8 @@
    member_email VARCHAR2(30 BYTE) NOT NULL, 
    member_phone VARCHAR2(14 BYTE) NOT NULL,
    member_sex VARCHAR2(6 BYTE),
-   CONSTRAINT member_fk FOREIGN KEY (member_favorite1, member_favorite2, member_favorite3) REFERENCES lec_category(category_id)
+  -- CONSTRAINT member_fk FOREIGN KEY (member_favorite1, member_favorite2, member_favorite3) REFERENCES lec_category(category_id)
+  constraint fk_member_favorite1 Foreign key (member_favorite1) references lec_category(category_id),
+  constraint fk_member_favorite2 Foreign key (member_favorite2) references lec_category(category_id),
+  constraint fk_member_favorite3 Foreign key (member_favorite3) references lec_category(category_id)
    );
