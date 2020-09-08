@@ -21,7 +21,7 @@ CREATE TABLE FAQ(
 ---------------------------------------------
   CREATE TABLE member
    (
-   member_id VARCHAR2(15 BYTE) PRIMARY KEY, 
+   member_id VARCHAR2(15 BYTE), 
    member_favorite1 VARCHAR2(20 BYTE),
    member_favorite2 VARCHAR2(20 BYTE),
    member_favorite3 VARCHAR2(20 BYTE),
@@ -31,6 +31,7 @@ CREATE TABLE FAQ(
    member_email VARCHAR2(30 BYTE) NOT NULL, 
    member_phone VARCHAR2(14 BYTE) NOT NULL,
    member_sex VARCHAR2(6 BYTE),
+   CONSTRAINT member_pk PRIMARY KEY(member_id),
    CONSTRAINT member1_fk FOREIGN KEY (member_favorite1) REFERENCES lecture_category(category_id),
    CONSTRAINT member2_fk FOREIGN KEY (member_favorite2) REFERENCES lecture_category(category_id),
     CONSTRAINT member3_fk FOREIGN KEY (member_favorite3) REFERENCES lecture_category(category_id)
@@ -68,8 +69,8 @@ create table freeBoard(
     freeBoard_write_dt Date default sysdate not null,
     freeBoard_view_count number(5),
     freeBoard_deleteYN varchar2(1),
-    CONSTRAINT pk_freeBoard_id Primary Key(freeBoard_id),
-    CONSTRAINT fk_freeBoard_member_id Foreign Key(freeBoard_member_id) References member (member_id)
+    CONSTRAINT freeBoard_pk Primary Key(freeBoard_id),
+    CONSTRAINT freeBoard_fk Foreign Key(freeBoard_member_id) References member (member_id)
                 ON DELETE CASCADE);
     --DROP TABLE freeBoard CASCADE CONSTRAINTS ;
 ---------------------------------------------
@@ -77,7 +78,7 @@ create table freeBoard(
 ---------------------------------------------
   CREATE TABLE FreeReply
    (
-   freeReply_id NUMBER NOT NULL, 
+   freeReply_id NUMBER, 
    freeReply_parent_board NUMBER NOT NULL,
    freeReply_member_id VARCHAR2(15 BYTE) NOT NULL,
    freeReply_content VARCHAR2(2000 BYTE) NOT NULL,
@@ -91,7 +92,7 @@ create table freeBoard(
 --STUDY_BOARD 
 ---------------------------------------------
 CREATE TABLE STUDY_BOARD (
-       STUDYBOARD_ID NUMBER NOT NULL,
+       STUDYBOARD_ID NUMBER,
        STUDYBOARD_MEMBER_ID VARCHAR2(15) NOT NULL,
        STUDYBOARD_TITLE VARCHAR2(300) NOT NULL,
        STUDYBOARD_CONTENT VARCHAR2(3000) NOT NULL,
@@ -179,9 +180,9 @@ CREATE TABLE MEMBER_LECTURE_HISTORY (
         LECTURE_CATEGORY_ID VARCHAR2(10),
         PAYMENT_DT DATE NOT NULL,
         CANCEL_DT DATE,
-        CONSTRAINT MEMBER_LECTURE_HISTORY_PK3 PRIMARY KEY (MEMBER_ID,LECTURE_ID,LECTURE_CATEGORY_ID),
-        CONSTRAINT MEMBER_id3_FK FOREIGN KEY (MEMBER_ID) REFERENCES MEMBER(MEMBER_ID),
-        CONSTRAINT LECTURE_FK3 FOREIGN KEY (LECTURE_ID,LECTURE_CATEGORY_ID) REFERENCES LECTURE(LECTURE_ID,LECTURE_CATEGORY_ID));
+        CONSTRAINT MEMBER_LECTURE_HISTORY_PK PRIMARY KEY (MEMBER_ID,LECTURE_ID,LECTURE_CATEGORY_ID),
+        CONSTRAINT MEMBER_id_FK FOREIGN KEY (MEMBER_ID) REFERENCES MEMBER(MEMBER_ID),
+        CONSTRAINT LECTURE_FK FOREIGN KEY (LECTURE_ID,LECTURE_CATEGORY_ID) REFERENCES LECTURE(LECTURE_ID,LECTURE_CATEGORY_ID));
     --drop table MEMBER_LECTURE_HISTORY CASCADE CONSTRAINTS;
 ---------------------------------------------
 --REVIEW
@@ -194,12 +195,12 @@ CREATE TABLE REVIEW (
     , review_content VARCHAR2(300) not null
     , review_dt DATE not null
 
-    , CONSTRAINT PK_lecture_category_id PRIMARY KEY(lecture_category_id, member_id, lecture_id)
-    , CONSTRAINT FK_review_TO_u_l_h
+    , CONSTRAINT lecture_category_id_pk PRIMARY KEY(lecture_category_id, member_id, lecture_id)
+    , CONSTRAINT review_fk
     FOREIGN KEY (lecture_category_id, member_id, lecture_id)
     REFERENCES member_lecture_history (lecture_category_id , member_id, lecture_id)
     ON DELETE CASCADE
 );
-    drop table REVIEW CASCADE CONSTRAINTS;
+    --drop table REVIEW CASCADE CONSTRAINTS;
 ---------------------------------------------
 commit;
