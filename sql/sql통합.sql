@@ -6,6 +6,11 @@ category_name VARCHAR2(50),
 CONSTRAINT lecture_category_pk PRIMARY KEY (category_id)
 );
 --drop TABLE lecture_category CASCADE CONSTRAINTS;
+
+INSERT INTO lecture_category VALUES('MA','마케팅');
+INSERT INTO lecture_category VALUES('WP','웹 프로그래밍');
+INSERT INTO lecture_category VALUES('SC','스터디 카운슬링');
+
 ---------------------------------------------
 --FAQ
 ---------------------------------------------
@@ -16,6 +21,10 @@ CREATE TABLE FAQ(
     CONSTRAINT FAQ_pk PRIMARY KEY (FAQ_ID)
     );
 --drop TABLE FAQ CASCADE CONSTRAINTS;
+
+Insert into FAQ VALUES(faq_seq.nextVal, 'faq 1번 문항', '1번 문항 답변');
+Insert into FAQ VALUES(faq_seq.nextVal, 'faq 2번 문항', '2번 문항 답변');
+
 ---------------------------------------------
 --member
 ---------------------------------------------
@@ -38,6 +47,11 @@ CREATE TABLE FAQ(
    );
    
    --drop TABLE member CASCADE CONSTRAINTS;
+   
+INSERT INTO member VALUES('member1', 'MA', 'WP', NULL, 'N', 'pw1', '고준식', 'p@a.com', '000-0000-0000', 'M');
+INSERT INTO member VALUES('member2', 'SC', NULL, NULL, 'Y', 'pw2', '준고식', 'pp@a.com', '010-0000-0000', 'F');
+INSERT INTO member VALUES('member3', 'WP', 'MA', NULL, 'Y', 'pw3', '식준고', 'pp@ap.com', '010-0000-0001', 'N');
+   
 ---------------------------------------------
 --Tutor
 ---------------------------------------------
@@ -55,9 +69,12 @@ CREATE TABLE Tutor (
     );
 
     --DROP TABLE Tutor CASCADE CONSTRAINTS ;
+    
+INSERT INTO tutor VALUES('member2', 'SC', 'tutor2_test.jpg', 'tutor2_career.docx', 'test용 자기소개', 'http://www.naver.com', 0); 
+INSERT INTO tutor VALUES('member3', 'WP', 'tutor3_test.jpg', 'tutor3_career.hwp', 'test용 자기소개2', 'http://www.daum.com', 0);
+INSERT INTO tutor VALUES('member3', 'MA', 'tutor3_test.jpg', 'tutor3_career.hwp', 'test용 자기소개2', 'http://www.daum.com', 4);
+    
 ---------------------------------------------
-
-
 --freeBoard
 ---------------------------------------------
 create table freeBoard(
@@ -73,6 +90,12 @@ create table freeBoard(
     CONSTRAINT freeBoard_fk Foreign Key(freeBoard_member_id) References member (member_id)
                 ON DELETE CASCADE);
     --DROP TABLE freeBoard CASCADE CONSTRAINTS ;
+    
+INSERT INTO freeboard VALUES(FREEBOARD_SEQ.Nextval, 'member1', '자유게시판 제목1', '자유게시판 내용1', NULL, to_date('2020/09/10'), 0, 'N');
+INSERT INTO freeboard VALUES(FREEBOARD_SEQ.Nextval, 'member1', '자유게시판 제목2', '자유게시판 내용2', '미국갔어.jpg', to_date('2020/09/10'), 0, 'N');
+INSERT INTO freeboard VALUES(FREEBOARD_SEQ.Nextval, 'member2', '자유게시판 제목3', '자유게시판 내용3', NULL, to_date('2020/09/10'), 0, 'Y');
+INSERT INTO freeboard VALUES(FREEBOARD_SEQ.Nextval, 'member3', '자유게시판 제목4', '자유게시판 내용4', NULL, to_date('2020/09/10'), 0, 'N');   
+
 ---------------------------------------------
 --FreeReply  
 ---------------------------------------------
@@ -88,10 +111,16 @@ create table freeBoard(
    CONSTRAINT freereply_member_id_fk FOREIGN KEY (freeReply_member_id) REFERENCES member(member_id)
    );
    --DROP TABLE FreeReply CASCADE CONSTRAINTS ;
+   
+INSERT INTO freereply VALUES(FREEREPLY_SEQ.Nextval, '1', 'member2', '댓글1', to_date('2020/09/09'));
+INSERT INTO freereply VALUES(FREEREPLY_SEQ.Nextval, '1', 'member2', '댓글2', to_date('2020/09/09'));
+INSERT INTO freereply VALUES(FREEREPLY_SEQ.Nextval, '2', 'member2', '댓글3', to_date('2020/09/09'));
+INSERT INTO freereply VALUES(FREEREPLY_SEQ.Nextval, '4', 'member2', '댓글4', to_date('2020/09/09'));
+   
 ---------------------------------------------
 --STUDY_BOARD 
 ---------------------------------------------
-CREATE TABLE STUDY_BOARD (
+CREATE TABLE STUDYBOARD (
        STUDYBOARD_ID NUMBER,
        STUDYBOARD_MEMBER_ID VARCHAR2(15) NOT NULL,
        STUDYBOARD_TITLE VARCHAR2(300) NOT NULL,
@@ -105,6 +134,12 @@ CREATE TABLE STUDY_BOARD (
       CONSTRAINT MEMBER_FK FOREIGN KEY (STUDYBOARD_MEMBER_ID) REFERENCES MEMBER(MEMBER_ID)
 );
    --DROP TABLE STUDY_BOARD CASCADE CONSTRAINTS ;
+
+INSERT INTO studyboard VALUES(STUDY_BOARD_SEQ.Nextval, 'member3', '스터디게시판 제목1', '스터디게시판 내용1', NULL, to_date('2020/09/10'), 0, 'N');
+INSERT INTO studyboard VALUES(STUDY_BOARD_SEQ.Nextval, 'member3', '스터디게시판 제목2', '스터디게시판 내용2', '너개못하잖아.jpg', to_date('2020/09/10'), 0, 'N');
+INSERT INTO studyboard VALUES(STUDY_BOARD_SEQ.Nextval, 'member1', '스터디게시판 제목3', '스터디게시판 내용3', NULL, to_date('2020/09/10'), 0, 'Y');
+INSERT INTO studyboard VALUES(STUDY_BOARD_SEQ.Nextval, 'member2', '스터디게시판 제목4', '스터디게시판 내용4', NULL, to_date('2020/09/10'), 0, 'N');
+
 ---------------------------------------------
 CREATE TABLE studyReply (
 	studyReply_id NUMBER
@@ -118,22 +153,12 @@ CREATE TABLE studyReply (
    ,CONSTRAINT studyReply_to_member_fk FOREIGN KEY ( studyReply_member_id )REFERENCES member ( member_id )
 );
    --DROP TABLE studyReply CASCADE CONSTRAINTS ;
----------------------------------------------
---lecture_detail
----------------------------------------------
-CREATE TABLE lecture_detail(
-lecture_id number,
-lecture_category_id varchar2(10),
-lecture_prepared varchar2(600),
-lecture_caution varchar2(900),
-lecture_fileName varchar2(100),
-lecture_reject_reason varchar2(600),
-lecture_cancel_reason varchar2(600),
-lecture_location varchar2(300),
-CONSTRAINT lecture_detail_pk PRIMARY KEY(lecture_id, lecture_category_id)
-);
+   
+INSERT INTO studyreply VALUES(STUDYREPLY_SEQ.Nextval, '1', 'member2', '댓글1', to_date('2020/09/09'));
+INSERT INTO studyreply VALUES(STUDYREPLY_SEQ.Nextval, '1', 'member2', '댓글2', to_date('2020/09/09'));
+INSERT INTO studyreply VALUES(STUDYREPLY_SEQ.Nextval, '2', 'member2', '댓글3', to_date('2020/09/09'));
+INSERT INTO studyreply VALUES(STUDYREPLY_SEQ.Nextval, '4', 'member2', '댓글4', to_date('2020/09/09'));   
 
-   --DROP TABLE lecture_detail CASCADE CONSTRAINTS ;
 ---------------------------------------------
 --lecture
 ---------------------------------------------
@@ -156,9 +181,33 @@ CREATE TABLE lecture (
     REFERENCES tutor(TUTOR_CATEGORY_ID,TUTOR_ID) ON DELETE CASCADE    
     );
    --DROP TABLE lecture CASCADE CONSTRAINTS ;    
-   
-    ALTER table lecture_detail ADD CONSTRAINT lecture2_fk FOREIGN KEY (lecture_id, lecture_category_id)REFERENCES lecture (lecture_id, lecture_category_id);
 
+INSERT INTO lecture VALUES(lecture_seq.nextVal, 'SC', 'member2', 'lecture_test1.png', '스터디 카운슬링', '공부법1, 공부법2', 5000, '승인', to_date('2020/09/20', 'YYYY/MM/DD'), to_date('2020/10/20', 'YYYY/MM/DD'), 15, 5, 0); 
+INSERT INTO lecture VALUES(lecture_seq.nextVal, 'WP', 'member3', 'lecture_test2.jpg', '웹 마스터리', '자바와 시블블', 6000, '승인대기', to_date('2020/09/20', 'YYYY/MM/DD'), to_date('2020/10/20', 'YYYY/MM/DD'), 20, 8, 0);
+INSERT INTO lecture VALUES(lecture_seq.nextVal, 'MA', 'member3', 'lecture_test3.jpg', '마케링', '애드블럭 ㅅㄱ', 7000, '승인', to_date('2020/08/20', 'YYYY/MM/DD'), to_date('2020/09/10', 'YYYY/MM/DD'), 15, 5, 6);
+INSERT INTO lecture VALUES(lecture_seq.nextVal, 'MA', 'member3', 'lecture_test4.jpg', '마케링2', '애드블럭 ㅅㄱ2', 5000, '취소', to_date('2020/08/10', 'YYYY/MM/DD'), to_date('2020/09/10', 'YYYY/MM/DD'), 15, 5, 0);
+
+---------------------------------------------
+--lecture_detail
+---------------------------------------------
+CREATE TABLE lecture_detail(
+lecture_id number,
+lecture_category_id varchar2(10),
+lecture_prepared varchar2(600),
+lecture_caution varchar2(900),
+lecture_fileName varchar2(100),
+lecture_reject_reason varchar2(600),
+lecture_cancel_reason varchar2(600),
+lecture_location varchar2(300),
+CONSTRAINT lecture_detail_pk PRIMARY KEY(lecture_id, lecture_category_id),
+CONSTRAINT lecture_detail_FK FOREIGN KEY(lecture_id, lecture_category_id)REFERENCES lecture (lecture_id, lecture_category_id)
+);
+
+INSERT INTO lecture_detail VALUES(1, 'SC', 'SC 준비물', 'SC 주의사항', null, null, null, '인천 송도');
+INSERT INTO lecture_detail VALUES(2, 'WP', 'WP 준비물', 'WP 주의사항', 'lecture_detail2.jpg', null, null, '신림 포도몰');
+INSERT INTO lecture_detail VALUES(lecture_seq.currval, 'MA', 'MA 준비물', 'MA 주의사항', 'lecture_detail3.pdf', null, null, '디에고 코스타');
+
+   --DROP TABLE lecture_detail CASCADE CONSTRAINTS ;
 ---------------------------------------------
 --wishlist
 ---------------------------------------------
@@ -171,6 +220,9 @@ CREATE TABLE wishlist (
     CONSTRAINT member_id_fk1 FOREIGN KEY(member_id) REFERENCES member(member_id)
     );
     --drop table wishlist CASCADE CONSTRAINTS;
+
+INSERT INTO wishlist VALUES(1, 'member3', 'SC');
+
 ---------------------------------------------
 --MEMBER_LECTURE_HISTORY
 ---------------------------------------------
@@ -184,6 +236,10 @@ CREATE TABLE MEMBER_LECTURE_HISTORY (
         CONSTRAINT MEMBER_id_FK FOREIGN KEY (MEMBER_ID) REFERENCES MEMBER(MEMBER_ID),
         CONSTRAINT LECTURE_FK FOREIGN KEY (LECTURE_ID,LECTURE_CATEGORY_ID) REFERENCES LECTURE(LECTURE_ID,LECTURE_CATEGORY_ID));
     --drop table MEMBER_LECTURE_HISTORY CASCADE CONSTRAINTS;
+    
+INSERT INTO member_lecture_history VALUES('member1',1, 'SC', to_date('2020/09/10'));
+INSERT INTO member_lecture_history VALUES('member2', 3, 'MA', to_date('2020/08/10'));
+
 ---------------------------------------------
 --REVIEW
 ---------------------------------------------
@@ -203,10 +259,12 @@ CREATE TABLE REVIEW (
 );
     --drop table REVIEW CASCADE CONSTRAINTS;
 
+INSERT INTO review VALUES('MA', 'member2', 3, 4, '좋습니다',  to_date('2020/09/10'));
+
 ---시퀀스------------------------------------
 
 -- 스터디게시판 번호
-CREATE SEQUENCE STUDY_BOARD_SEQ
+CREATE SEQUENCE STUDYBOARD_SEQ
 INCREMENT BY 1
 START WITH 1
 MINVALUE 1
@@ -224,6 +282,15 @@ NOCACHE
 NOORDER
 NOCYCLE;
 
+-- 자유게시판 번호
+create sequence freeboard_seq
+increment by 1
+start with 1
+minvalue 1
+maxvalue 999999
+nocycle
+nocache;
+
 -- 자유게시판 댓글
 CREATE SEQUENCE  FREEREPLY_SEQ
 MINVALUE 1
@@ -235,12 +302,21 @@ NOORDER
 NOCYCLE ;
 
 -- 강의 번호
-CREATE SEQUENCE lecture
+CREATE SEQUENCE lecture_seq
   START WITH 1
   INCREMENT BY 1
   MAXVALUE 100000
   MINVALUE 1
   NOCACHE
   NOCYCLE;
+
+--FAQ
+create sequence faq_seq
+increment by 1
+start with 1
+minvalue 1
+maxvalue 10
+nocycle
+nocache;
 
 commit;
