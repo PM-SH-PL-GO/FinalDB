@@ -7,9 +7,9 @@ CONSTRAINT lecture_category_pk PRIMARY KEY (category_id)
 );
 --drop TABLE lecture_category CASCADE CONSTRAINTS;
 
-INSERT INTO lecture_category VALUES('MA','¸¶ÄÉÆÃ');
-INSERT INTO lecture_category VALUES('WP','À¥ ÇÁ·Î±×·¡¹Ö');
-INSERT INTO lecture_category VALUES('SC','½ºÅÍµğ Ä«¿î½½¸µ');
+INSERT INTO lecture_category VALUES('MA','ë§ˆì¼€íŒ…');
+INSERT INTO lecture_category VALUES('WP','ì›¹ í”„ë¡œê·¸ë˜ë°');
+INSERT INTO lecture_category VALUES('SC','ìŠ¤í„°ë”” ì¹´ìš´ìŠ¬ë§');
 
 ---------------------------------------------
 --FAQ
@@ -22,8 +22,8 @@ CREATE TABLE FAQ(
     );
 --drop TABLE FAQ CASCADE CONSTRAINTS;
 
-Insert into FAQ VALUES(faq_seq.nextVal, 'faq 1¹ø ¹®Ç×', '1¹ø ¹®Ç× ´äº¯');
-Insert into FAQ VALUES(faq_seq.nextVal, 'faq 2¹ø ¹®Ç×', '2¹ø ¹®Ç× ´äº¯');
+Insert into FAQ VALUES(faq_seq.nextVal, 'faq 1ë²ˆ ë¬¸í•­', '1ë²ˆ ë¬¸í•­ ë‹µë³€');
+Insert into FAQ VALUES(faq_seq.nextVal, 'faq 2ë²ˆ ë¬¸í•­', '2ë²ˆ ë¬¸í•­ ë‹µë³€');
 
 ---------------------------------------------
 --member
@@ -48,9 +48,9 @@ Insert into FAQ VALUES(faq_seq.nextVal, 'faq 2¹ø ¹®Ç×', '2¹ø ¹®Ç× ´äº¯');
    
    --drop TABLE member CASCADE CONSTRAINTS;
    
-INSERT INTO member VALUES('member1', 'MA', 'WP', NULL, 'N', 'pw1', '°íÁØ½Ä', 'p@a.com', '000-0000-0000', 'M');
-INSERT INTO member VALUES('member2', 'SC', NULL, NULL, 'Y', 'pw2', 'ÁØ°í½Ä', 'pp@a.com', '010-0000-0000', 'F');
-INSERT INTO member VALUES('member3', 'WP', 'MA', NULL, 'Y', 'pw3', '½ÄÁØ°í', 'pp@ap.com', '010-0000-0001', 'N');
+INSERT INTO member VALUES('member1', 'MA', 'WP', NULL, 'N', 'pw1', 'ê³ ì¤€ì‹', 'p@a.com', '000-0000-0000', 'M');
+INSERT INTO member VALUES('member2', 'SC', NULL, NULL, 'Y', 'pw2', 'ì¤€ê³ ì‹', 'pp@a.com', '010-0000-0000', 'F');
+INSERT INTO member VALUES('member3', 'WP', 'MA', NULL, 'Y', 'pw3', 'ì‹ì¤€ê³ ', 'pp@ap.com', '010-0000-0001', 'N');
    
 ---------------------------------------------
 --Tutor
@@ -70,9 +70,9 @@ CREATE TABLE Tutor (
 
     --DROP TABLE Tutor CASCADE CONSTRAINTS ;
     
-INSERT INTO tutor VALUES('member2', 'SC', 'tutor2_test.jpg', 'tutor2_career.docx', 'test¿ë ÀÚ±â¼Ò°³', 'http://www.naver.com', 0); 
-INSERT INTO tutor VALUES('member3', 'WP', 'tutor3_test.jpg', 'tutor3_career.hwp', 'test¿ë ÀÚ±â¼Ò°³2', 'http://www.daum.com', 0);
-INSERT INTO tutor VALUES('member3', 'MA', 'tutor3_test.jpg', 'tutor3_career.hwp', 'test¿ë ÀÚ±â¼Ò°³2', 'http://www.daum.com', 4);
+INSERT INTO tutor VALUES('member2', 'SC', 'tutor2_test.jpg', 'tutor2_career.docx', 'testìš© ìê¸°ì†Œê°œ', 'http://www.naver.com', 0); 
+INSERT INTO tutor VALUES('member3', 'WP', 'tutor3_test.jpg', 'tutor3_career.hwp', 'testìš© ìê¸°ì†Œê°œ2', 'http://www.daum.com', 0);
+INSERT INTO tutor VALUES('member3', 'MA', 'tutor3_test.jpg', 'tutor3_career.hwp', 'testìš© ìê¸°ì†Œê°œ2', 'http://www.daum.com', 4);
     
 ---------------------------------------------
 --freeBoard
@@ -91,10 +91,10 @@ create table freeBoard(
                 ON DELETE CASCADE);
     --DROP TABLE freeBoard CASCADE CONSTRAINTS ;
     
-INSERT INTO freeboard VALUES(FREEBOARD_SEQ.Nextval, 'member1', 'ÀÚÀ¯°Ô½ÃÆÇ Á¦¸ñ1', 'ÀÚÀ¯°Ô½ÃÆÇ ³»¿ë1', NULL, to_date('2020/09/10'), 0, 'N');
-INSERT INTO freeboard VALUES(FREEBOARD_SEQ.Nextval, 'member1', 'ÀÚÀ¯°Ô½ÃÆÇ Á¦¸ñ2', 'ÀÚÀ¯°Ô½ÃÆÇ ³»¿ë2', '¹Ì±¹°¬¾î.jpg', to_date('2020/09/10'), 0, 'N');
-INSERT INTO freeboard VALUES(FREEBOARD_SEQ.Nextval, 'member2', 'ÀÚÀ¯°Ô½ÃÆÇ Á¦¸ñ3', 'ÀÚÀ¯°Ô½ÃÆÇ ³»¿ë3', NULL, to_date('2020/09/10'), 0, 'Y');
-INSERT INTO freeboard VALUES(FREEBOARD_SEQ.Nextval, 'member3', 'ÀÚÀ¯°Ô½ÃÆÇ Á¦¸ñ4', 'ÀÚÀ¯°Ô½ÃÆÇ ³»¿ë4', NULL, to_date('2020/09/10'), 0, 'N');   
+INSERT INTO freeboard VALUES(FREEBOARD_SEQ.Nextval, 'member1', 'ììœ ê²Œì‹œíŒ ì œëª©1', 'ììœ ê²Œì‹œíŒ ë‚´ìš©1', NULL, to_date('2020/09/10'), 0, 'N');
+INSERT INTO freeboard VALUES(FREEBOARD_SEQ.Nextval, 'member1', 'ììœ ê²Œì‹œíŒ ì œëª©2', 'ììœ ê²Œì‹œíŒ ë‚´ìš©2', 'ë¯¸êµ­ê°”ì–´.jpg', to_date('2020/09/10'), 0, 'N');
+INSERT INTO freeboard VALUES(FREEBOARD_SEQ.Nextval, 'member2', 'ììœ ê²Œì‹œíŒ ì œëª©3', 'ììœ ê²Œì‹œíŒ ë‚´ìš©3', NULL, to_date('2020/09/10'), 0, 'Y');
+INSERT INTO freeboard VALUES(FREEBOARD_SEQ.Nextval, 'member3', 'ììœ ê²Œì‹œíŒ ì œëª©4', 'ììœ ê²Œì‹œíŒ ë‚´ìš©4', NULL, to_date('2020/09/10'), 0, 'N');   
 
 ---------------------------------------------
 --FreeReply  
@@ -112,10 +112,10 @@ INSERT INTO freeboard VALUES(FREEBOARD_SEQ.Nextval, 'member3', 'ÀÚÀ¯°Ô½ÃÆÇ Á¦¸ñ4
    );
    --DROP TABLE FreeReply CASCADE CONSTRAINTS ;
    
-INSERT INTO freereply VALUES(FREEREPLY_SEQ.Nextval, '1', 'member2', '´ñ±Û1', to_date('2020/09/09'));
-INSERT INTO freereply VALUES(FREEREPLY_SEQ.Nextval, '1', 'member2', '´ñ±Û2', to_date('2020/09/09'));
-INSERT INTO freereply VALUES(FREEREPLY_SEQ.Nextval, '2', 'member2', '´ñ±Û3', to_date('2020/09/09'));
-INSERT INTO freereply VALUES(FREEREPLY_SEQ.Nextval, '4', 'member2', '´ñ±Û4', to_date('2020/09/09'));
+INSERT INTO freereply VALUES(FREEREPLY_SEQ.Nextval, '1', 'member2', 'ëŒ“ê¸€1', to_date('2020/09/09'));
+INSERT INTO freereply VALUES(FREEREPLY_SEQ.Nextval, '1', 'member2', 'ëŒ“ê¸€2', to_date('2020/09/09'));
+INSERT INTO freereply VALUES(FREEREPLY_SEQ.Nextval, '2', 'member2', 'ëŒ“ê¸€3', to_date('2020/09/09'));
+INSERT INTO freereply VALUES(FREEREPLY_SEQ.Nextval, '4', 'member2', 'ëŒ“ê¸€4', to_date('2020/09/09'));
    
 ---------------------------------------------
 --STUDY_BOARD 
@@ -135,10 +135,10 @@ CREATE TABLE STUDYBOARD (
 );
    --DROP TABLE STUDY_BOARD CASCADE CONSTRAINTS ;
 
-INSERT INTO studyboard VALUES(STUDY_BOARD_SEQ.Nextval, 'member3', '½ºÅÍµğ°Ô½ÃÆÇ Á¦¸ñ1', '½ºÅÍµğ°Ô½ÃÆÇ ³»¿ë1', NULL, to_date('2020/09/10'), 0, 'N');
-INSERT INTO studyboard VALUES(STUDY_BOARD_SEQ.Nextval, 'member3', '½ºÅÍµğ°Ô½ÃÆÇ Á¦¸ñ2', '½ºÅÍµğ°Ô½ÃÆÇ ³»¿ë2', '³Ê°³¸øÇÏÀİ¾Æ.jpg', to_date('2020/09/10'), 0, 'N');
-INSERT INTO studyboard VALUES(STUDY_BOARD_SEQ.Nextval, 'member1', '½ºÅÍµğ°Ô½ÃÆÇ Á¦¸ñ3', '½ºÅÍµğ°Ô½ÃÆÇ ³»¿ë3', NULL, to_date('2020/09/10'), 0, 'Y');
-INSERT INTO studyboard VALUES(STUDY_BOARD_SEQ.Nextval, 'member2', '½ºÅÍµğ°Ô½ÃÆÇ Á¦¸ñ4', '½ºÅÍµğ°Ô½ÃÆÇ ³»¿ë4', NULL, to_date('2020/09/10'), 0, 'N');
+INSERT INTO studyboard VALUES(STUDY_BOARD_SEQ.Nextval, 'member3', 'ìŠ¤í„°ë””ê²Œì‹œíŒ ì œëª©1', 'ìŠ¤í„°ë””ê²Œì‹œíŒ ë‚´ìš©1', NULL, to_date('2020/09/10'), 0, 'N');
+INSERT INTO studyboard VALUES(STUDY_BOARD_SEQ.Nextval, 'member3', 'ìŠ¤í„°ë””ê²Œì‹œíŒ ì œëª©2', 'ìŠ¤í„°ë””ê²Œì‹œíŒ ë‚´ìš©2', 'ë„ˆê°œëª»í•˜ì–ì•„.jpg', to_date('2020/09/10'), 0, 'N');
+INSERT INTO studyboard VALUES(STUDY_BOARD_SEQ.Nextval, 'member1', 'ìŠ¤í„°ë””ê²Œì‹œíŒ ì œëª©3', 'ìŠ¤í„°ë””ê²Œì‹œíŒ ë‚´ìš©3', NULL, to_date('2020/09/10'), 0, 'Y');
+INSERT INTO studyboard VALUES(STUDY_BOARD_SEQ.Nextval, 'member2', 'ìŠ¤í„°ë””ê²Œì‹œíŒ ì œëª©4', 'ìŠ¤í„°ë””ê²Œì‹œíŒ ë‚´ìš©4', NULL, to_date('2020/09/10'), 0, 'N');
 
 ---------------------------------------------
 CREATE TABLE studyReply (
@@ -154,10 +154,10 @@ CREATE TABLE studyReply (
 );
    --DROP TABLE studyReply CASCADE CONSTRAINTS ;
    
-INSERT INTO studyreply VALUES(STUDYREPLY_SEQ.Nextval, '1', 'member2', '´ñ±Û1', to_date('2020/09/09'));
-INSERT INTO studyreply VALUES(STUDYREPLY_SEQ.Nextval, '1', 'member2', '´ñ±Û2', to_date('2020/09/09'));
-INSERT INTO studyreply VALUES(STUDYREPLY_SEQ.Nextval, '2', 'member2', '´ñ±Û3', to_date('2020/09/09'));
-INSERT INTO studyreply VALUES(STUDYREPLY_SEQ.Nextval, '4', 'member2', '´ñ±Û4', to_date('2020/09/09'));   
+INSERT INTO studyreply VALUES(STUDYREPLY_SEQ.Nextval, '1', 'member2', 'ëŒ“ê¸€1', to_date('2020/09/09'));
+INSERT INTO studyreply VALUES(STUDYREPLY_SEQ.Nextval, '1', 'member2', 'ëŒ“ê¸€2', to_date('2020/09/09'));
+INSERT INTO studyreply VALUES(STUDYREPLY_SEQ.Nextval, '2', 'member2', 'ëŒ“ê¸€3', to_date('2020/09/09'));
+INSERT INTO studyreply VALUES(STUDYREPLY_SEQ.Nextval, '4', 'member2', 'ëŒ“ê¸€4', to_date('2020/09/09'));   
 
 ---------------------------------------------
 --lecture
@@ -182,10 +182,10 @@ CREATE TABLE lecture (
     );
    --DROP TABLE lecture CASCADE CONSTRAINTS ;    
 
-INSERT INTO lecture VALUES(lecture_seq.nextVal, 'SC', 'member2', 'lecture_test1.png', '½ºÅÍµğ Ä«¿î½½¸µ', '°øºÎ¹ı1, °øºÎ¹ı2', 5000, '½ÂÀÎ', to_date('2020/09/20', 'YYYY/MM/DD'), to_date('2020/10/20', 'YYYY/MM/DD'), 15, 5, 0); 
-INSERT INTO lecture VALUES(lecture_seq.nextVal, 'WP', 'member3', 'lecture_test2.jpg', 'À¥ ¸¶½ºÅÍ¸®', 'ÀÚ¹Ù¿Í ½Ãºíºí', 6000, '½ÂÀÎ´ë±â', to_date('2020/09/20', 'YYYY/MM/DD'), to_date('2020/10/20', 'YYYY/MM/DD'), 20, 8, 0);
-INSERT INTO lecture VALUES(lecture_seq.nextVal, 'MA', 'member3', 'lecture_test3.jpg', '¸¶ÄÉ¸µ', '¾Öµåºí·° ¤µ¤¡', 7000, '½ÂÀÎ', to_date('2020/08/20', 'YYYY/MM/DD'), to_date('2020/09/10', 'YYYY/MM/DD'), 15, 5, 6);
-INSERT INTO lecture VALUES(lecture_seq.nextVal, 'MA', 'member3', 'lecture_test4.jpg', '¸¶ÄÉ¸µ2', '¾Öµåºí·° ¤µ¤¡2', 5000, 'Ãë¼Ò', to_date('2020/08/10', 'YYYY/MM/DD'), to_date('2020/09/10', 'YYYY/MM/DD'), 15, 5, 0);
+INSERT INTO lecture VALUES(lecture_seq.nextVal, 'SC', 'member2', 'lecture_test1.png', 'ìŠ¤í„°ë”” ì¹´ìš´ìŠ¬ë§', 'ê³µë¶€ë²•1, ê³µë¶€ë²•2', 5000, 'ìŠ¹ì¸', to_date('2020/09/20', 'YYYY/MM/DD'), to_date('2020/10/20', 'YYYY/MM/DD'), 15, 5, 0); 
+INSERT INTO lecture VALUES(lecture_seq.nextVal, 'WP', 'member3', 'lecture_test2.jpg', 'ì›¹ ë§ˆìŠ¤í„°ë¦¬', 'ìë°”ì™€ ì‹œë¸”ë¸”', 6000, 'ìŠ¹ì¸ëŒ€ê¸°', to_date('2020/09/20', 'YYYY/MM/DD'), to_date('2020/10/20', 'YYYY/MM/DD'), 20, 8, 0);
+INSERT INTO lecture VALUES(lecture_seq.nextVal, 'MA', 'member3', 'lecture_test3.jpg', 'ë§ˆì¼€ë§', 'ì• ë“œë¸”ëŸ­ ã……ã„±', 7000, 'ìŠ¹ì¸', to_date('2020/08/20', 'YYYY/MM/DD'), to_date('2020/09/10', 'YYYY/MM/DD'), 15, 5, 6);
+INSERT INTO lecture VALUES(lecture_seq.nextVal, 'MA', 'member3', 'lecture_test4.jpg', 'ë§ˆì¼€ë§2', 'ì• ë“œë¸”ëŸ­ ã……ã„±2', 5000, 'ì·¨ì†Œ', to_date('2020/08/10', 'YYYY/MM/DD'), to_date('2020/09/10', 'YYYY/MM/DD'), 15, 5, 0);
 
 ---------------------------------------------
 --lecture_detail
@@ -203,9 +203,9 @@ CONSTRAINT lecture_detail_pk PRIMARY KEY(lecture_id, lecture_category_id),
 CONSTRAINT lecture_detail_FK FOREIGN KEY(lecture_id, lecture_category_id)REFERENCES lecture (lecture_id, lecture_category_id)
 );
 
-INSERT INTO lecture_detail VALUES(1, 'SC', 'SC ÁØºñ¹°', 'SC ÁÖÀÇ»çÇ×', null, null, null, 'ÀÎÃµ ¼Ûµµ');
-INSERT INTO lecture_detail VALUES(2, 'WP', 'WP ÁØºñ¹°', 'WP ÁÖÀÇ»çÇ×', 'lecture_detail2.jpg', null, null, '½Å¸² Æ÷µµ¸ô');
-INSERT INTO lecture_detail VALUES(lecture_seq.currval, 'MA', 'MA ÁØºñ¹°', 'MA ÁÖÀÇ»çÇ×', 'lecture_detail3.pdf', null, null, 'µğ¿¡°í ÄÚ½ºÅ¸');
+INSERT INTO lecture_detail VALUES(1, 'SC', 'SC ì¤€ë¹„ë¬¼', 'SC ì£¼ì˜ì‚¬í•­', null, null, null, 'ì¸ì²œ ì†¡ë„');
+INSERT INTO lecture_detail VALUES(2, 'WP', 'WP ì¤€ë¹„ë¬¼', 'WP ì£¼ì˜ì‚¬í•­', 'lecture_detail2.jpg', null, null, 'ì‹ ë¦¼ í¬ë„ëª°');
+INSERT INTO lecture_detail VALUES(lecture_seq.currval, 'MA', 'MA ì¤€ë¹„ë¬¼', 'MA ì£¼ì˜ì‚¬í•­', 'lecture_detail3.pdf', null, null, 'ë””ì—ê³  ì½”ìŠ¤íƒ€');
 
    --DROP TABLE lecture_detail CASCADE CONSTRAINTS ;
 ---------------------------------------------
@@ -259,11 +259,11 @@ CREATE TABLE REVIEW (
 );
     --drop table REVIEW CASCADE CONSTRAINTS;
 
-INSERT INTO review VALUES('MA', 'member2', 3, 4, 'ÁÁ½À´Ï´Ù',  to_date('2020/09/10'));
+INSERT INTO review VALUES('MA', 'member2', 3, 4, 'ì¢‹ìŠµë‹ˆë‹¤',  to_date('2020/09/10'));
 
----½ÃÄö½º------------------------------------
+---ì‹œí€€ìŠ¤------------------------------------
 
--- ½ºÅÍµğ°Ô½ÃÆÇ ¹øÈ£
+-- ìŠ¤í„°ë””ê²Œì‹œíŒ ë²ˆí˜¸
 CREATE SEQUENCE STUDYBOARD_SEQ
 INCREMENT BY 1
 START WITH 1
@@ -272,7 +272,7 @@ NOMAXVALUE
 NOCYCLE
 NOCACHE;
 
--- ½ºÅÍµğ°Ô½ÃÆÇ ´ñ±Û
+-- ìŠ¤í„°ë””ê²Œì‹œíŒ ëŒ“ê¸€
 CREATE SEQUENCE STUDYREPLY_SEQ
 MINVALUE 1
 MAXVALUE 999999
@@ -282,7 +282,7 @@ NOCACHE
 NOORDER
 NOCYCLE;
 
--- ÀÚÀ¯°Ô½ÃÆÇ ¹øÈ£
+-- ììœ ê²Œì‹œíŒ ë²ˆí˜¸
 create sequence freeboard_seq
 increment by 1
 start with 1
@@ -291,7 +291,7 @@ maxvalue 999999
 nocycle
 nocache;
 
--- ÀÚÀ¯°Ô½ÃÆÇ ´ñ±Û
+-- ììœ ê²Œì‹œíŒ ëŒ“ê¸€
 CREATE SEQUENCE  FREEREPLY_SEQ
 MINVALUE 1
 MAXVALUE 999999
@@ -301,14 +301,14 @@ NOCACHE
 NOORDER
 NOCYCLE ;
 
--- °­ÀÇ ¹øÈ£
+-- ê°•ì˜ ë²ˆí˜¸
 CREATE SEQUENCE lecture_seq
-  START WITH 1
-  INCREMENT BY 1
-  MAXVALUE 100000
-  MINVALUE 1
-  NOCACHE
-  NOCYCLE;
+START WITH 1
+INCREMENT BY 1
+MAXVALUE 100000
+MINVALUE 1
+NOCACHE
+NOCYCLE;
 
 --FAQ
 create sequence faq_seq
