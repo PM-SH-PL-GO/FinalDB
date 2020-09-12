@@ -1,3 +1,61 @@
+---시퀀스------------------------------------
+
+-- 스터디게시판 번호
+CREATE SEQUENCE STUDYBOARD_SEQ
+INCREMENT BY 1
+START WITH 1
+MINVALUE 1
+NOMAXVALUE
+NOCYCLE
+NOCACHE;
+
+-- 스터디게시판 댓글
+CREATE SEQUENCE STUDYREPLY_SEQ
+MINVALUE 1
+MAXVALUE 999999
+INCREMENT BY 1
+START WITH 1
+NOCACHE
+NOORDER
+NOCYCLE;
+
+-- 자유게시판 번호
+create sequence freeboard_seq
+increment by 1
+start with 1
+minvalue 1
+maxvalue 999999
+nocycle
+nocache;
+
+-- 자유게시판 댓글
+CREATE SEQUENCE  FREEREPLY_SEQ
+MINVALUE 1
+MAXVALUE 999999
+INCREMENT BY 1
+START WITH 1
+NOCACHE
+NOORDER
+NOCYCLE ;
+
+-- 강의 번호
+CREATE SEQUENCE lecture_seq
+START WITH 1
+INCREMENT BY 1
+MAXVALUE 100000
+MINVALUE 1
+NOCACHE
+NOCYCLE;
+
+--FAQ
+create sequence faq_seq
+increment by 1
+start with 1
+minvalue 1
+maxvalue 10
+nocycle
+nocache;
+
 -------------------------------------
 --lec_category 
 -------------------------------------
@@ -52,6 +110,7 @@ CREATE TABLE FAQ(
 CREATE TABLE Tutor (
     tutor_id varchar2(15),
     tutor_category_id varchar2(10),
+    tutor_nickname varchar2(20) NOT NULL,
     tutor_img varchar2(100) NOT NULL,
     tutor_career_file varchar2(100) NOT NULL,
     tutor_introduce varchar2(3000) NOT NULL,
@@ -146,7 +205,6 @@ CREATE TABLE lecture (
     lecture_tutor_id varchar2(15) NOT NULL,
     lecture_img varchar2(100) NOT NULL,
     lecture_title varchar2(100) NOT NULL,
-    lecture_content varchar2(3000) NOT NULL,
     lecture_price NUMBER(7) NOT NULL,
     lecture_state varchar2(20) NOT NULL,
     lecture_start_dt DATE NOT NULL,
@@ -163,12 +221,15 @@ CREATE TABLE lecture (
 ---------------------------------------------
 --lecture_detail
 ---------------------------------------------
+
 CREATE TABLE lecture_detail(
 lecture_id number,
 lecture_category_id varchar2(10),
+lecture_introduce varchar2(1500),
+lecture_curriculum varchar2(2500),
 lecture_prepared varchar2(600),
 lecture_caution varchar2(900),
-lecture_fileName varchar2(100),
+lecture_filename varchar2(100),
 lecture_reject_reason varchar2(600),
 lecture_cancel_reason varchar2(600),
 lecture_location varchar2(300),
@@ -225,84 +286,33 @@ CREATE TABLE REVIEW (
 );
     --drop table REVIEW CASCADE CONSTRAINTS;
 
----시퀀스------------------------------------
-
--- 스터디게시판 번호
-CREATE SEQUENCE STUDYBOARD_SEQ
-INCREMENT BY 1
-START WITH 1
-MINVALUE 1
-NOMAXVALUE
-NOCYCLE
-NOCACHE;
-
--- 스터디게시판 댓글
-CREATE SEQUENCE STUDYREPLY_SEQ
-MINVALUE 1
-MAXVALUE 999999
-INCREMENT BY 1
-START WITH 1
-NOCACHE
-NOORDER
-NOCYCLE;
-
--- 자유게시판 번호
-create sequence freeboard_seq
-increment by 1
-start with 1
-minvalue 1
-maxvalue 999999
-nocycle
-nocache;
-
--- 자유게시판 댓글
-CREATE SEQUENCE  FREEREPLY_SEQ
-MINVALUE 1
-MAXVALUE 999999
-INCREMENT BY 1
-START WITH 1
-NOCACHE
-NOORDER
-NOCYCLE ;
-
--- 강의 번호
-CREATE SEQUENCE lecture_seq
-START WITH 1
-INCREMENT BY 1
-MAXVALUE 100000
-MINVALUE 1
-NOCACHE
-NOCYCLE;
-
---FAQ
-create sequence faq_seq
-increment by 1
-start with 1
-minvalue 1
-maxvalue 10
-nocycle
-nocache;
-
 commit;
 
 
 --DML 
-INSERT INTO lecture_category VALUES('MA','마케팅');
-INSERT INTO lecture_category VALUES('WP','웹 프로그래밍');
-INSERT INTO lecture_category VALUES('SC','스터디 카운슬링');
+INSERT INTO lecture_category VALUES('IT','IT');
+INSERT INTO lecture_category VALUES('HO','Hobby(취미)');
+INSERT INTO lecture_category VALUES('MA','Marketing(마케팅)');
+INSERT INTO lecture_category VALUES('DE','Design(디자인)');
+INSERT INTO lecture_category VALUES('CA','Career(취업)');
+INSERT INTO lecture_category VALUES('BU','Business(영업)');
+INSERT INTO lecture_category VALUES('LE','Lession(학습)');
+INSERT INTO lecture_category VALUES('SP','Sport(스포츠)');
 
 
 Insert into FAQ VALUES(faq_seq.nextVal, 'faq 1번 문항', '1번 문항 답변');
 Insert into FAQ VALUES(faq_seq.nextVal, 'faq 2번 문항', '2번 문항 답변');
 
-INSERT INTO member VALUES('member1', 'MA', 'WP', NULL, 'N', 'pw1', '고준식', 'p@a.com', '000-0000-0000', 'M');
-INSERT INTO member VALUES('member2', 'SC', NULL, NULL, 'Y', 'pw2', '준고식', 'pp@a.com', '010-0000-0000', 'F');
-INSERT INTO member VALUES('member3', 'WP', 'MA', NULL, 'Y', 'pw3', '식준고', 'pp@ap.com', '010-0000-0001', 'N');
+
+INSERT INTO member VALUES('member1', 'MA', 'DE', NULL, 'N', 'pw1', '고준식', 'p@a.com', '000-0000-0000', 'M');
+INSERT INTO member VALUES('member2', 'SP', NULL, NULL, 'Y', 'pw2', '준고식', 'pp@a.com', '010-0000-0000', 'F');
+INSERT INTO member VALUES('member3', 'DE', 'MA', NULL, 'Y', 'pw3', '식준고', 'pp@ap.com', '010-0000-0001', 'N');
 
     
-INSERT INTO tutor VALUES('member2', 'SC', 'tutor2_test.jpg', 'tutor2_career.docx', 'test용 자기소개', 'http://www.naver.com', 0); 
-INSERT INTO tutor VALUES('member3', 'WP', 'tutor3_test.jpg', 'tutor3_career.hwp', 'test용 자기소개2', 'http://www.daum.com', 0);
-INSERT INTO tutor VALUES('member3', 'MA', 'tutor3_test.jpg', 'tutor3_career.hwp', 'test용 자기소개2', 'http://www.daum.com', 4);
+INSERT INTO tutor VALUES('member2', 'SP', 'mem2_nick', 'tutor2_test.jpg', 'tutor2_career.docx', 'test용 자기소개', 'http://www.naver.com', 0); 
+INSERT INTO tutor VALUES('member3', 'DE', 'mem3_nick', 'tutor3_test.jpg', 'tutor3_career.hwp', 'test용 자기소개2', 'http://www.daum.com', 0);
+INSERT INTO tutor VALUES('member3', 'MA', 'mem3_nick', 'tutor3_test.jpg', 'tutor3_career.hwp', 'test용 자기소개2', 'http://www.daum.com', 4);
+
 
 INSERT INTO freeboard VALUES(FREEBOARD_SEQ.Nextval, 'member1', '자유게시판 제목1', '자유게시판 내용1', NULL, to_date('2020/09/10'), 0, 'N');
 INSERT INTO freeboard VALUES(FREEBOARD_SEQ.Nextval, 'member1', '자유게시판 제목2', '자유게시판 내용2', '미국갔어.jpg', to_date('2020/09/10'), 0, 'N');
@@ -320,26 +330,28 @@ INSERT INTO studyboard VALUES(STUDYBOARD_SEQ.Nextval, 'member3', '스터디게�
 INSERT INTO studyboard VALUES(STUDYBOARD_SEQ.Nextval, 'member1', '스터디게시판 제목3', '스터디게시판 내용3', NULL, to_date('2020/09/10'), 0, 'Y');
 INSERT INTO studyboard VALUES(STUDYBOARD_SEQ.Nextval, 'member2', '스터디게시판 제목4', '스터디게시판 내용4', NULL, to_date('2020/09/10'), 0, 'N');
 
-INSERT INTO lecture VALUES(lecture_seq.nextVal, 'SC', 'member2', 'lecture_test1.png', '스터디 카운슬링', '공부법1, 공부법2', 5000, '승인', to_date('2020/09/20', 'YYYY/MM/DD'), to_date('2020/10/20', 'YYYY/MM/DD'), 15, 5, 0); 
-INSERT INTO lecture VALUES(lecture_seq.nextVal, 'WP', 'member3', 'lecture_test2.jpg', '웹 마스터리', '자바와 시블블', 6000, '승인대기', to_date('2020/09/20', 'YYYY/MM/DD'), to_date('2020/10/20', 'YYYY/MM/DD'), 20, 8, 0);
-INSERT INTO lecture VALUES(lecture_seq.nextVal, 'MA', 'member3', 'lecture_test3.jpg', '마케링', '애드블럭 ㅅㄱ', 7000, '승인', to_date('2020/08/20', 'YYYY/MM/DD'), to_date('2020/09/10', 'YYYY/MM/DD'), 15, 5, 6);
-INSERT INTO lecture VALUES(lecture_seq.nextVal, 'MA', 'member3', 'lecture_test4.jpg', '마케링2', '애드블럭 ㅅㄱ2', 5000, '취소', to_date('2020/08/10', 'YYYY/MM/DD'), to_date('2020/09/10', 'YYYY/MM/DD'), 15, 5, 0);
-
-
 INSERT INTO studyreply VALUES(STUDYREPLY_SEQ.Nextval, '1', 'member2', '댓글1', to_date('2020/09/09'));
 INSERT INTO studyreply VALUES(STUDYREPLY_SEQ.Nextval, '1', 'member2', '댓글2', to_date('2020/09/09'));
 INSERT INTO studyreply VALUES(STUDYREPLY_SEQ.Nextval, '2', 'member2', '댓글3', to_date('2020/09/09'));
 INSERT INTO studyreply VALUES(STUDYREPLY_SEQ.Nextval, '4', 'member2', '댓글4', to_date('2020/09/09'));   
 
 
-INSERT INTO lecture_detail VALUES(1, 'SC', 'SC 준비물', 'SC 주의사항', null, null, null, '인천 송도');
-INSERT INTO lecture_detail VALUES(2, 'WP', 'WP 준비물', 'WP 주의사항', 'lecture_detail2.jpg', null, null, '신림 포도몰');
-INSERT INTO lecture_detail VALUES(lecture_seq.currval, 'MA', 'MA 준비물', 'MA 주의사항', 'lecture_detail3.pdf', null, null, '디에고 코스타');
+INSERT INTO lecture VALUES(lecture_seq.nextVal, 'SP', 'member2', 'lecture_test1.png', '스포츠 모임', 5000, '승인', to_date('2020/09/20', 'YYYY/MM/DD'), to_date('2020/10/20', 'YYYY/MM/DD'), 15, 5, 0);
+INSERT INTO lecture_detail VALUES(lecture_seq.currval, 'SP', 'SP 준비물', 'SP 강의소개', 'SP 교육과정', 'SP 주의사항', null, null, null, '인천 송도');
+INSERT INTO lecture VALUES(lecture_seq.nextVal, 'DE', 'member3', 'lecture_test2.jpg', '취미완전 정복', 6000, '승인대기', to_date('2020/09/20', 'YYYY/MM/DD'), to_date('2020/10/20', 'YYYY/MM/DD'), 20, 8, 0);
+INSERT INTO lecture_detail VALUES(lecture_seq.currval, 'DE', 'DE 준비물', 'DE 강의소개','DE 교육과정', 'DE 주의사항', 'lecture_detail2.jpg', null, null, '신림 포도몰');
+INSERT INTO lecture VALUES(lecture_seq.nextVal, 'MA', 'member3', 'lecture_test3.jpg', '마케링', 7000, '승인', to_date('2020/08/20', 'YYYY/MM/DD'), to_date('2020/09/10', 'YYYY/MM/DD'), 15, 5, 6);
+INSERT INTO lecture_detail VALUES(lecture_seq.currval, 'MA', 'MA 준비물', 'MA 강의소개','MA 교육과정', 'MA 주의사항', 'lecture_detail3.pdf', null, null, '디에고 코스타');
+INSERT INTO lecture VALUES(lecture_seq.nextVal, 'MA', 'member3', 'lecture_test4.jpg', '마케링2', 5000, '취소', to_date('2020/08/10', 'YYYY/MM/DD'), to_date('2020/09/10', 'YYYY/MM/DD'), 15, 5, 0);
+INSERT INTO lecture_detail VALUES(lecture_seq.currval, 'MA', 'MA 준비물', 'MA 강의소개','MA 교육과정', 'MA 주의사항', 'lecture_detail3.pdf', null, null, '디에고 코스타');
 
-INSERT INTO wishlist VALUES(1, 'member3', 'SC');
 
-INSERT INTO member_lecture_history (MEMBER_ID,LECTURE_ID,LECTURE_CATEGORY_ID, PAYMENT_DT) VALUES('member1', 1, 'SC', to_date('2020/09/10'));
+INSERT INTO wishlist VALUES(1, 'member3', 'SP');
+
+
+INSERT INTO member_lecture_history (MEMBER_ID,LECTURE_ID,LECTURE_CATEGORY_ID, PAYMENT_DT) VALUES('member1', 1, 'SP', to_date('2020/09/10'));
 INSERT INTO member_lecture_history (MEMBER_ID,LECTURE_ID,LECTURE_CATEGORY_ID, PAYMENT_DT) VALUES('member2', 3, 'MA', to_date('2020/08/10'));
+
 
 INSERT INTO review VALUES('MA', 'member2', 3, 100, '좋습니다',  to_date('2020/09/10'));
 
