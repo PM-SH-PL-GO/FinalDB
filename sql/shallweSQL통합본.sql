@@ -311,7 +311,7 @@ INSERT INTO member VALUES('member3', 'DE', 'MA', NULL, 'Y', 'pw3', '식준고', 
     
 INSERT INTO tutor VALUES('member2', 'SP', 'mem2_nick', 'tutor2_test.jpg', 'tutor2_career.docx', 'test용 자기소개', 'http://www.naver.com', 0); 
 INSERT INTO tutor VALUES('member3', 'DE', 'mem3_nick', 'tutor3_test.jpg', 'tutor3_career.hwp', 'test용 자기소개2', 'http://www.daum.com', 0);
-INSERT INTO tutor VALUES('member3', 'MA', 'mem3_nick', 'tutor3_test.jpg', 'tutor3_career.hwp', 'test용 자기소개2', 'http://www.daum.com', 4);
+INSERT INTO tutor VALUES('member3', 'MA', 'mem3_nick', 'tutor3_test.jpg', 'tutor3_career.hwp', 'test용 자기소개2', 'http://www.daum.com', 100);
 
 
 INSERT INTO freeboard VALUES(FREEBOARD_SEQ.Nextval, 'member1', '자유게시판 제목1', '자유게시판 내용1', NULL, to_date('2020/09/10'), 0, 'N');

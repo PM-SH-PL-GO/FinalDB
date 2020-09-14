@@ -1,0 +1,29 @@
+create or replace PROCEDURE Insert_Review_and_Update_Tutor_Score
+(
+    lectureCategoryId IN varchar2,
+    memberId IN varchar2,
+    lectureId IN varchar2,
+    reviewScore IN number,
+    reviewContent IN varchar2,
+    reviewDt IN DATE
+)
+IS
+BEGIN
+
+INSERT INTO review VALUES(lectureCategoryId, memberId, lectureId, reviewScore, reviewContent, reviewDt);
+
+UPDATE tutor tu
+SET tu.tutor_score = (select round(avg(RV.REVIEW_SCORE), 1)
+                      from review rv
+                        JOIN lecture lec ON (RV.LECTURE_CATEGORY_ID = LEC.LECTURE_CATEGORY_ID and RV.LECTURE_ID = LEC.LECTURE_ID)
+                      where lec.lecture_category_id = lectureCategoryId
+                        AND lec.lecture_id = lectureId)
+WHERE TU.TUTOR_ID = (select lec.lecture_tutor_id
+                     from lecture lec
+                        JOIN review rv ON (lec.lecture_id = rv.lecture_id and lec.lecture_category_id = rv.lecture_category_id)
+                     where rv.member_id = memberId)
+AND tu.tutor_category_id = lectureCategoryId;
+    
+commit;
+    
+END Insert_Review_and_Update_Tutor_Score;
