@@ -12,4 +12,7 @@ UPDATE lecture
 SET LECTURE_STATE = '취소대기'
 WHERE LECTURE_ID = 5;
 
+UPDATE member_lecture_history
+SET CANCEL_DT = SYSDATE
+WHERE member_id = 'member1' AND lecture_id = 1;
 commit;
