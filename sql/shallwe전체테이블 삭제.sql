@@ -1,6 +1,9 @@
 drop TABLE faq CASCADE CONSTRAINTS;
 drop TABLE freeboard CASCADE CONSTRAINTS;
 drop TABLE freereply CASCADE CONSTRAINTS;
+drop table tutor_reject;
+drop table reject_category cascade constraints;
+drop table member_auth;
 drop TABLE lecture CASCADE CONSTRAINTS;
 drop TABLE lecture_category CASCADE CONSTRAINTS;
 drop TABLE lecture_detail CASCADE CONSTRAINTS;
