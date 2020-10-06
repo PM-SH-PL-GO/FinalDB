@@ -9,7 +9,11 @@ WHERE LECTURE_ID = 4;
 commit;
 UPDATE lecture
 SET LECTURE_STATE = '취소대기'
-WHERE LECTURE_ID = 5;
+WHERE LECTURE_ID = 80;
+
+UPDATE lecture_detail
+SET LECTURE_CANCEL_REASON = '이렇군'
+WHERE LECTURE_ID = 80;
 
 UPDATE member_lecture_history
 SET CANCEL_DT = SYSDATE
