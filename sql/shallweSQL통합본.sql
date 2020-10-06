@@ -94,6 +94,7 @@ CREATE TABLE FAQ(
    member_email VARCHAR2(30 BYTE) NOT NULL, 
    member_phone VARCHAR2(14 BYTE) NOT NULL,
    member_sex VARCHAR2(6 BYTE),
+   enabled number(1),
    CONSTRAINT member_pk PRIMARY KEY(member_id),
    CONSTRAINT member1_fk FOREIGN KEY (member_favorite1) REFERENCES lecture_category(category_id),
    CONSTRAINT member2_fk FOREIGN KEY (member_favorite2) REFERENCES lecture_category(category_id),
@@ -116,6 +117,7 @@ CREATE TABLE Tutor (
     tutor_introduce varchar2(3000) NOT NULL,
     tutor_link varchar2(100),
     tutor_score number(5),
+    approval_dt date,
     constraint tutor_pk primary key(tutor_id, tutor_category_id),
     constraint lecture_fk foreign key(tutor_category_id) references lecture_category(category_id),
     constraint member_fk1 foreign key(tutor_id) references member(member_id)
@@ -194,7 +196,14 @@ CREATE TABLE studyReply (
 );
    --DROP TABLE studyReply CASCADE CONSTRAINTS ;
    
-
+----------------------------------------------
+-- 반려 사유
+----------------------------------------------
+CREATE TABLE reject_category(
+    reject_category_id VARCHAR2(15),
+    reject_category_value VARCHAR2(500) not null,
+    CONSTRAINT reject_cateogry_pk PRIMARY KEY(reject_category_id)
+);
 
 ---------------------------------------------
 --lecture
@@ -230,11 +239,15 @@ lecture_curriculum varchar2(2500),
 lecture_prepared varchar2(600),
 lecture_caution varchar2(900),
 lecture_filename varchar2(100),
+lecture_reject_category varchar2(15),
 lecture_reject_reason varchar2(600),
 lecture_cancel_reason varchar2(600),
 lecture_location varchar2(300),
+lecture_approval_dt date,
+lecture_reject_dt date,
 CONSTRAINT lecture_detail_pk PRIMARY KEY(lecture_id, lecture_category_id),
-CONSTRAINT lecture_detail_FK FOREIGN KEY(lecture_id, lecture_category_id)REFERENCES lecture (lecture_id, lecture_category_id)
+CONSTRAINT lecture_detail_FK FOREIGN KEY(lecture_id, lecture_category_id)REFERENCES lecture (lecture_id, lecture_category_id),
+CONSTRAINT lecture_detail_FK2 FOREIGN KEY(lecture_reject_category) REFERENCES reject_category(reject_category_id)
 );
 
    --DROP TABLE lecture_detail CASCADE CONSTRAINTS ;
@@ -251,6 +264,21 @@ CREATE TABLE wishlist (
     );
     --drop table wishlist CASCADE CONSTRAINTS;
 
+--------------------------------------------
+-- 반려된 강사들 목록이다 2말이야
+--------------------------------------------
+
+CREATE TABLE tutor_reject(
+    tutor_id varchar2(15),
+    tutor_category_id varchar2(10),
+    reject_category_id varchar2(8),
+    reject_reason varchar2(3000) not null,
+    reject_dt date not null,
+    
+    constraint tutor_reject_pk PRIMARY KEY(tutor_id, tutor_category_id, reject_category_id),
+    constraint tutor_reject_fk1 FOREIGN KEY(tutor_id, tutor_category_id) REFERENCES tutor(tutor_id, tutor_category_id),
+    constraint tutor_reject_fk2 FOREIGN KEY(reject_category_id) REFERENCES reject_category(reject_category_id)
+);
 
 ---------------------------------------------
 --MEMBER_LECTURE_HISTORY
@@ -286,6 +314,15 @@ CREATE TABLE REVIEW (
 );
     --drop table REVIEW CASCADE CONSTRAINTS;
 
+----------------------------------------------
+-- 권한
+----------------------------------------------
+ CREATE TABLE MEMBER_AUTH 
+(	member_id VARCHAR2(50 BYTE), 
+    authority VARCHAR2(20 BYTE) not null,
+    CONSTRAINT member_auth_pk PRIMARY KEY(member_id)
+);
+
 commit;
 
 
@@ -304,14 +341,14 @@ Insert into FAQ VALUES(faq_seq.nextVal, 'faq 1번 문항', '1번 문항 답변')
 Insert into FAQ VALUES(faq_seq.nextVal, 'faq 2번 문항', '2번 문항 답변');
 
 
-INSERT INTO member VALUES('member1', 'MA', 'DE', NULL, 'N', 'pw1', '고준식', 'p@a.com', '000-0000-0000', 'M');
-INSERT INTO member VALUES('member2', 'SP', NULL, NULL, 'Y', 'pw2', '준고식', 'pp@a.com', '010-0000-0000', 'F');
-INSERT INTO member VALUES('member3', 'DE', 'MA', NULL, 'Y', 'pw3', '식준고', 'pp@ap.com', '010-0000-0001', 'N');
+INSERT INTO member VALUES('member1', 'MA', 'DE', NULL, 'N', 'pw1', '고준식', 'p@a.com', '000-0000-0000', 'M', 1);
+INSERT INTO member VALUES('member2', 'SP', NULL, NULL, 'Y', 'pw2', '준고식', 'pp@a.com', '010-0000-0000', 'F', 1);
+INSERT INTO member VALUES('member3', 'DE', 'MA', NULL, 'Y', 'pw3', '식준고', 'pp@ap.com', '010-0000-0001', 'N', 1);
 
     
-INSERT INTO tutor VALUES('member2', 'SP', 'mem2_nick', 'tutor2_test.jpg', 'tutor2_career.docx', 'test용 자기소개', 'http://www.naver.com', 0); 
-INSERT INTO tutor VALUES('member3', 'DE', 'mem3_nick', 'tutor3_test.jpg', 'tutor3_career.hwp', 'test용 자기소개2', 'http://www.daum.com', 0);
-INSERT INTO tutor VALUES('member3', 'MA', 'mem3_nick', 'tutor3_test.jpg', 'tutor3_career.hwp', 'test용 자기소개2', 'http://www.daum.com', 100);
+INSERT INTO tutor VALUES('member2', 'SP', 'mem2_nick', 'tutor2_test.jpg', 'tutor2_career.docx', 'test용 자기소개', 'http://www.naver.com', 0, sysdate); 
+INSERT INTO tutor VALUES('member3', 'DE', 'mem3_nick', 'tutor3_test.jpg', 'tutor3_career.hwp', 'test용 자기소개2', 'http://www.daum.com', 0, sysdate);
+INSERT INTO tutor VALUES('member3', 'MA', 'mem3_nick', 'tutor3_test.jpg', 'tutor3_career.hwp', 'test용 자기소개2', 'http://www.daum.com', 100, sysdate);
 
 
 INSERT INTO freeboard VALUES(FREEBOARD_SEQ.Nextval, 'member1', '자유게시판 제목1', '자유게시판 내용1', NULL, to_date('2020/09/10'), 0, 'N');
@@ -335,16 +372,21 @@ INSERT INTO studyreply VALUES(STUDYREPLY_SEQ.Nextval, '1', 'member2', '댓글2',
 INSERT INTO studyreply VALUES(STUDYREPLY_SEQ.Nextval, '2', 'member2', '댓글3', to_date('2020/09/09'));
 INSERT INTO studyreply VALUES(STUDYREPLY_SEQ.Nextval, '4', 'member2', '댓글4', to_date('2020/09/09'));   
 
+-- 반려 사유들
+INSERT INTO reject_category VALUES('unsuit', '부적절한 제목/사진 사용');
+INSERT INTO reject_category VALUES('lewdNviolent', '외설적, 폭력적인 내용 포함');
+INSERT INTO reject_category VALUES('illegal', '불법적이거나 부당한 행위');
+INSERT INTO reject_category VALUES('lack', '부족한 내용설명');
+INSERT INTO reject_category VALUES('etc', '기타');
 
 INSERT INTO lecture VALUES(lecture_seq.nextVal, 'SP', 'member2', 'lecture_test1.png', '스포츠 모임', 5000, '승인', to_date('2020/09/20', 'YYYY/MM/DD'), to_date('2020/10/20', 'YYYY/MM/DD'), 15, 5, 0);
-INSERT INTO lecture_detail VALUES(lecture_seq.currval, 'SP', 'SP 준비물', 'SP 강의소개', 'SP 교육과정', 'SP 주의사항', null, null, null, '인천 송도');
+INSERT INTO lecture_detail VALUES(lecture_seq.currval, 'SP', 'SP 준비물', 'SP 강의소개', 'SP 교육과정', 'SP 주의사항', null, null, null, null, '인천 송도', null, null);
 INSERT INTO lecture VALUES(lecture_seq.nextVal, 'DE', 'member3', 'lecture_test2.jpg', '취미완전 정복', 6000, '승인대기', to_date('2020/09/20', 'YYYY/MM/DD'), to_date('2020/10/20', 'YYYY/MM/DD'), 20, 8, 0);
-INSERT INTO lecture_detail VALUES(lecture_seq.currval, 'DE', 'DE 준비물', 'DE 강의소개','DE 교육과정', 'DE 주의사항', 'lecture_detail2.jpg', null, null, '신림 포도몰');
+INSERT INTO lecture_detail VALUES(lecture_seq.currval, 'DE', 'DE 준비물', 'DE 강의소개','DE 교육과정', 'DE 주의사항', 'lecture_detail2.jpg', null, null, null, '신림 포도몰', null, null);
 INSERT INTO lecture VALUES(lecture_seq.nextVal, 'MA', 'member3', 'lecture_test3.jpg', '마케링', 7000, '승인', to_date('2020/08/20', 'YYYY/MM/DD'), to_date('2020/09/10', 'YYYY/MM/DD'), 15, 5, 6);
-INSERT INTO lecture_detail VALUES(lecture_seq.currval, 'MA', 'MA 준비물', 'MA 강의소개','MA 교육과정', 'MA 주의사항', 'lecture_detail3.pdf', null, null, '디에고 코스타');
-INSERT INTO lecture VALUES(lecture_seq.nextVal, 'MA', 'member3', 'lecture_test4.jpg', '마케링2', 5000, '취소', to_date('2020/08/10', 'YYYY/MM/DD'), to_date('2020/09/10', 'YYYY/MM/DD'), 15, 5, 0);
-INSERT INTO lecture_detail VALUES(lecture_seq.currval, 'MA', 'MA 준비물', 'MA 강의소개','MA 교육과정', 'MA 주의사항', 'lecture_detail3.pdf', null, null, '디에고 코스타');
-
+INSERT INTO lecture_detail VALUES(lecture_seq.currval, 'MA', 'MA 준비물', 'MA 강의소개','MA 교육과정', 'MA 주의사항', 'lecture_detail3.pdf', null, null, null, '판교 코스타', null, null);
+INSERT INTO lecture VALUES(lecture_seq.nextVal, 'MA', 'member3', 'lecture_test4.jpg', '마케링2', 8000, '취소', to_date('2020/08/10', 'YYYY/MM/DD'), to_date('2020/09/10', 'YYYY/MM/DD'), 20, 10, 0);
+INSERT INTO lecture_detail VALUES(lecture_seq.currval, 'MA', 'MA 준비물', 'MA 강의소개','MA 교육과정', 'MA 주의사항', 'lecture_detail3.pdf', null, null, null, '가디 코스타', null, null);
 
 INSERT INTO wishlist VALUES(1, 'member3', 'SP');
 
