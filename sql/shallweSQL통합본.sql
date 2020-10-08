@@ -73,7 +73,7 @@ CONSTRAINT lecture_category_pk PRIMARY KEY (category_id)
 CREATE TABLE FAQ(
     FAQ_ID NUMBER(3),
     FAQ_QUESTION VARCHAR2(300),
-    FAQ_ANSWER VARCHAR2(300),
+    FAQ_ANSWER VARCHAR2(3000),
     CONSTRAINT FAQ_pk PRIMARY KEY (FAQ_ID)
     );
 --drop TABLE FAQ CASCADE CONSTRAINTS;
@@ -91,7 +91,7 @@ CREATE TABLE FAQ(
    tutor_YN VARCHAR2(1 BYTE) NOT NULL,
    member_pwd VARCHAR2(20 BYTE) NOT NULL,
    member_name VARCHAR2(20 BYTE) NOT NULL,
-   member_email VARCHAR2(30 BYTE) NOT NULL, 
+   member_email VARCHAR2(50 BYTE) NOT NULL, 
    member_phone VARCHAR2(14 BYTE) NOT NULL,
    member_sex VARCHAR2(6 BYTE),
    enabled number(1),
@@ -111,9 +111,9 @@ CREATE TABLE FAQ(
 CREATE TABLE Tutor (
     tutor_id varchar2(15),
     tutor_category_id varchar2(10),
-    tutor_nickname varchar2(20) NOT NULL,
-    tutor_img varchar2(100) NOT NULL,
-    tutor_career_file varchar2(100) NOT NULL,
+    tutor_nickname varchar2(50) NOT NULL,
+    tutor_img varchar2(1000) NOT NULL,
+    tutor_career_file varchar2(1000) NOT NULL,
     tutor_introduce varchar2(3000) NOT NULL,
     tutor_link varchar2(100),
     tutor_score number(5),
@@ -132,9 +132,9 @@ CREATE TABLE Tutor (
 create table freeBoard(
     freeBoard_id number(15) not null,
     freeBoard_member_id varchar2(20) not null,
-    freeBoard_title varchar2(50) not null,
-    freeBoard_content varchar2(1500) not null,
-    freeBoard_fileName varchar2(100),
+    freeBoard_title varchar2(1000) not null,
+    freeBoard_content varchar2(3999) not null,
+    freeBoard_fileName varchar2(1000),
     freeBoard_write_dt Date default sysdate not null,
     freeBoard_view_count number(5),
     freeBoard_deleteYN varchar2(1),
@@ -169,9 +169,9 @@ create table freeBoard(
 CREATE TABLE STUDYBOARD (
        STUDYBOARD_ID NUMBER,
        STUDYBOARD_MEMBER_ID VARCHAR2(15) NOT NULL,
-       STUDYBOARD_TITLE VARCHAR2(300) NOT NULL,
-       STUDYBOARD_CONTENT VARCHAR2(3000) NOT NULL,
-       STUDYBOARD_FILENAME VARCHAR2(100),
+       STUDYBOARD_TITLE VARCHAR2(1000) NOT NULL,
+       STUDYBOARD_CONTENT VARCHAR2(3999) NOT NULL,
+       STUDYBOARD_FILENAME VARCHAR2(1000),
        STUDYBOARD_WRITE_DT DATE,
        STUDYBOARD_VIEWCOUNT NUMBER(5),
        STUDYBOARD_DELETEYN VARCHAR2(1),
@@ -212,8 +212,8 @@ CREATE TABLE lecture (
     lecture_id number,
     lecture_category_id varchar2(10) NOT NULL,
     lecture_tutor_id varchar2(15) NOT NULL,
-    lecture_img varchar2(100) NOT NULL,
-    lecture_title varchar2(100) NOT NULL,
+    lecture_img varchar2(1000) NOT NULL,
+    lecture_title varchar2(2000) NOT NULL,
     lecture_price NUMBER(7) NOT NULL,
     lecture_state varchar2(20) NOT NULL,
     lecture_start_dt DATE NOT NULL,
@@ -234,14 +234,14 @@ CREATE TABLE lecture (
 CREATE TABLE lecture_detail(
 lecture_id number,
 lecture_category_id varchar2(10),
-lecture_introduce varchar2(1500),
-lecture_curriculum varchar2(2500),
-lecture_prepared varchar2(600),
-lecture_caution varchar2(900),
-lecture_filename varchar2(100),
+lecture_introduce varchar2(3000),
+lecture_curriculum varchar2(3000),
+lecture_prepared varchar2(1500),
+lecture_caution varchar2(150),
+lecture_filename varchar2(1000),
 lecture_reject_category varchar2(15),
-lecture_reject_reason varchar2(600),
-lecture_cancel_reason varchar2(600),
+lecture_reject_reason varchar2(2000),
+lecture_cancel_reason varchar2(2000),
 lecture_location varchar2(300),
 lecture_approval_dt date,
 lecture_reject_dt date,
@@ -303,7 +303,7 @@ CREATE TABLE REVIEW (
 	, member_id VARCHAR2(15)
     , lecture_id number
     , review_score NUMBER(3) not null
-    , review_content VARCHAR2(300) not null
+    , review_content VARCHAR2(3000) not null
     , review_dt DATE not null
 
     , CONSTRAINT lecture_category_id_pk PRIMARY KEY(lecture_category_id, member_id, lecture_id)
@@ -327,75 +327,6 @@ commit;
 
 
 --DML 
-INSERT INTO lecture_category VALUES('IT','IT');
-INSERT INTO lecture_category VALUES('HO','Hobby(취미)');
-INSERT INTO lecture_category VALUES('MA','Marketing(마케팅)');
-INSERT INTO lecture_category VALUES('DE','Design(디자인)');
-INSERT INTO lecture_category VALUES('CA','Career(취업)');
-INSERT INTO lecture_category VALUES('BU','Business(영업)');
-INSERT INTO lecture_category VALUES('LE','Lession(학습)');
-INSERT INTO lecture_category VALUES('SP','Sport(스포츠)');
-
-
-Insert into FAQ VALUES(faq_seq.nextVal, 'faq 1번 문항', '1번 문항 답변');
-Insert into FAQ VALUES(faq_seq.nextVal, 'faq 2번 문항', '2번 문항 답변');
-
-
-INSERT INTO member VALUES('member1', 'MA', 'DE', NULL, 'N', 'pw1', '고준식', 'p@a.com', '000-0000-0000', 'M', 1);
-INSERT INTO member VALUES('member2', 'SP', NULL, NULL, 'Y', 'pw2', '준고식', 'pp@a.com', '010-0000-0000', 'F', 1);
-INSERT INTO member VALUES('member3', 'DE', 'MA', NULL, 'Y', 'pw3', '식준고', 'pp@ap.com', '010-0000-0001', 'N', 1);
-
-    
-INSERT INTO tutor VALUES('member2', 'SP', 'mem2_nick', 'tutor2_test.jpg', 'tutor2_career.docx', 'test용 자기소개', 'http://www.naver.com', 0, sysdate); 
-INSERT INTO tutor VALUES('member3', 'DE', 'mem3_nick', 'tutor3_test.jpg', 'tutor3_career.hwp', 'test용 자기소개2', 'http://www.daum.com', 0, sysdate);
-INSERT INTO tutor VALUES('member3', 'MA', 'mem3_nick', 'tutor3_test.jpg', 'tutor3_career.hwp', 'test용 자기소개2', 'http://www.daum.com', 100, sysdate);
-
-
-INSERT INTO freeboard VALUES(FREEBOARD_SEQ.Nextval, 'member1', '자유게시판 제목1', '자유게시판 내용1', NULL, to_date('2020/09/10'), 0, 'N');
-INSERT INTO freeboard VALUES(FREEBOARD_SEQ.Nextval, 'member1', '자유게시판 제목2', '자유게시판 내용2', '미국갔어.jpg', to_date('2020/09/10'), 0, 'N');
-INSERT INTO freeboard VALUES(FREEBOARD_SEQ.Nextval, 'member2', '자유게시판 제목3', '자유게시판 내용3', NULL, to_date('2020/09/10'), 0, 'Y');
-INSERT INTO freeboard VALUES(FREEBOARD_SEQ.Nextval, 'member3', '자유게시판 제목4', '자유게시판 내용4', NULL, to_date('2020/09/10'), 0, 'N');   
-
-INSERT INTO freereply VALUES(FREEREPLY_SEQ.Nextval, '1', 'member2', '댓글1', to_date('2020/09/09'));
-INSERT INTO freereply VALUES(FREEREPLY_SEQ.Nextval, '1', 'member2', '댓글2', to_date('2020/09/09'));
-INSERT INTO freereply VALUES(FREEREPLY_SEQ.Nextval, '2', 'member2', '댓글3', to_date('2020/09/09'));
-INSERT INTO freereply VALUES(FREEREPLY_SEQ.Nextval, '4', 'member2', '댓글4', to_date('2020/09/09'));
-
-
-INSERT INTO studyboard VALUES(STUDYBOARD_SEQ.Nextval, 'member3', '스터디게시판 제목1', '스터디게시판 내용1', NULL, to_date('2020/09/10'), 0, 'N');
-INSERT INTO studyboard VALUES(STUDYBOARD_SEQ.Nextval, 'member3', '스터디게시판 제목2', '스터디게시판 내용2', '너개못하잖아.jpg', to_date('2020/09/10'), 0, 'N');
-INSERT INTO studyboard VALUES(STUDYBOARD_SEQ.Nextval, 'member1', '스터디게시판 제목3', '스터디게시판 내용3', NULL, to_date('2020/09/10'), 0, 'Y');
-INSERT INTO studyboard VALUES(STUDYBOARD_SEQ.Nextval, 'member2', '스터디게시판 제목4', '스터디게시판 내용4', NULL, to_date('2020/09/10'), 0, 'N');
-
-INSERT INTO studyreply VALUES(STUDYREPLY_SEQ.Nextval, '1', 'member2', '댓글1', to_date('2020/09/09'));
-INSERT INTO studyreply VALUES(STUDYREPLY_SEQ.Nextval, '1', 'member2', '댓글2', to_date('2020/09/09'));
-INSERT INTO studyreply VALUES(STUDYREPLY_SEQ.Nextval, '2', 'member2', '댓글3', to_date('2020/09/09'));
-INSERT INTO studyreply VALUES(STUDYREPLY_SEQ.Nextval, '4', 'member2', '댓글4', to_date('2020/09/09'));   
-
--- 반려 사유들
-INSERT INTO reject_category VALUES('unsuit', '부적절한 제목/사진 사용');
-INSERT INTO reject_category VALUES('lewdNviolent', '외설적, 폭력적인 내용 포함');
-INSERT INTO reject_category VALUES('illegal', '불법적이거나 부당한 행위');
-INSERT INTO reject_category VALUES('lack', '부족한 내용설명');
-INSERT INTO reject_category VALUES('etc', '기타');
-
-INSERT INTO lecture VALUES(lecture_seq.nextVal, 'SP', 'member2', 'lecture_test1.png', '스포츠 모임', 5000, '승인', to_date('2020/09/20', 'YYYY/MM/DD'), to_date('2020/10/20', 'YYYY/MM/DD'), 15, 5, 0);
-INSERT INTO lecture_detail VALUES(lecture_seq.currval, 'SP', 'SP 준비물', 'SP 강의소개', 'SP 교육과정', 'SP 주의사항', null, null, null, null, '인천 송도', null, null);
-INSERT INTO lecture VALUES(lecture_seq.nextVal, 'DE', 'member3', 'lecture_test2.jpg', '취미완전 정복', 6000, '승인대기', to_date('2020/09/20', 'YYYY/MM/DD'), to_date('2020/10/20', 'YYYY/MM/DD'), 20, 8, 0);
-INSERT INTO lecture_detail VALUES(lecture_seq.currval, 'DE', 'DE 준비물', 'DE 강의소개','DE 교육과정', 'DE 주의사항', 'lecture_detail2.jpg', null, null, null, '신림 포도몰', null, null);
-INSERT INTO lecture VALUES(lecture_seq.nextVal, 'MA', 'member3', 'lecture_test3.jpg', '마케링', 7000, '승인', to_date('2020/08/20', 'YYYY/MM/DD'), to_date('2020/09/10', 'YYYY/MM/DD'), 15, 5, 6);
-INSERT INTO lecture_detail VALUES(lecture_seq.currval, 'MA', 'MA 준비물', 'MA 강의소개','MA 교육과정', 'MA 주의사항', 'lecture_detail3.pdf', null, null, null, '판교 코스타', null, null);
-INSERT INTO lecture VALUES(lecture_seq.nextVal, 'MA', 'member3', 'lecture_test4.jpg', '마케링2', 8000, '취소', to_date('2020/08/10', 'YYYY/MM/DD'), to_date('2020/09/10', 'YYYY/MM/DD'), 20, 10, 0);
-INSERT INTO lecture_detail VALUES(lecture_seq.currval, 'MA', 'MA 준비물', 'MA 강의소개','MA 교육과정', 'MA 주의사항', 'lecture_detail3.pdf', null, null, null, '가디 코스타', null, null);
-
-INSERT INTO wishlist VALUES(1, 'member3', 'SP');
-
-
-INSERT INTO member_lecture_history (MEMBER_ID,LECTURE_ID,LECTURE_CATEGORY_ID, PAYMENT_DT) VALUES('member1', 1, 'SP', to_date('2020/09/10'));
-INSERT INTO member_lecture_history (MEMBER_ID,LECTURE_ID,LECTURE_CATEGORY_ID, PAYMENT_DT) VALUES('member2', 3, 'MA', to_date('2020/08/10'));
-
-
-INSERT INTO review VALUES('MA', 'member2', 3, 100, '좋습니다',  to_date('2020/09/10'));
 
 commit;
 
