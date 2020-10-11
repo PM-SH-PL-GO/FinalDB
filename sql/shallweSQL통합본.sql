@@ -306,7 +306,6 @@ CREATE TABLE REVIEW (
 
 commit;
 
-
 --DML 
 INSERT INTO reject_category VALUES('unsuit', '부적절한 제목/사진 사용');
 INSERT INTO reject_category VALUES('lewdNviolent', '외설적, 폭력적인 내용 포함');
